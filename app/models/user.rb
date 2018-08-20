@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 
-  before_create
+  before_validation :set_default_role
   # encrypt password
   has_secure_password
 
@@ -11,6 +11,6 @@ class User < ApplicationRecord
   validates_presence_of :name, :email, :password_digest
 
   def set_default_role
-    update!(role: Role.default)
+    self.role ||= Role.default
   end
 end
